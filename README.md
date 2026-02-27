@@ -1,13 +1,13 @@
-# ACP & UCP On-Chain Eligibility Verification Examples
+# InsumerAPI — On-Chain Verification Examples
 
-Minimal, copy-paste-ready examples for integrating on-chain token-holder discounts into AI agent commerce flows using [InsumerAPI](https://insumermodel.com/developers/).
+Minimal, copy-paste-ready examples for integrating on-chain verification into AI agent commerce flows using [InsumerAPI](https://insumermodel.com/developers/).
 
 **ACP** = OpenAI/Stripe Agentic Commerce Protocol
 **UCP** = Google Universal Commerce Protocol
 
-Both endpoints verify token holdings on-chain across 31 blockchains, then return a signed discount code in the requested protocol format. Same verification, different response shape.
-
 ## What's in this repo
+
+### Commerce Protocol Flows
 
 | File | Description |
 |------|-------------|
@@ -15,6 +15,21 @@ Both endpoints verify token holdings on-chain across 31 blockchains, then return
 | `ucp_flow.py` | UCP discount request with extension routing and title parsing |
 | `validate_code.py` | Merchant-side code validation (no API key needed) |
 | `full_agent_flow.py` | End-to-end: discover merchant → check eligibility → get discount → validate code |
+
+### Core Verification
+
+| File | Description |
+|------|-------------|
+| `attest_flow.py` | Boolean attestation — all 4 condition types + Merkle storage proofs |
+| `trust_flow.py` | Wallet trust profiles — single + batch (up to 10 wallets) |
+| `compliance_gating.py` | EAS attestation templates — Coinbase KYC, Gitcoin Passport, Farcaster ID |
+
+### Autonomous Agent Operations
+
+| File | Description |
+|------|-------------|
+| `merchant_onboarding.py` | Full self-serve pipeline: create → configure → publish (zero human input) |
+| `credits_flow.py` | Credit management: check balance, buy credits with USDC on-chain |
 
 ## Quick start
 
@@ -31,9 +46,9 @@ export INSUMER_API_KEY="insr_live_YOUR_KEY_HERE"
 
 # Run any example
 python acp_flow.py
-python ucp_flow.py
-python validate_code.py
-python full_agent_flow.py
+python attest_flow.py
+python compliance_gating.py
+python merchant_onboarding.py
 ```
 
 ## Get an API key
@@ -42,7 +57,54 @@ Free tier includes 10 verification credits. No credit card required.
 
 → [Get your key](https://insumermodel.com/developers/#pricing)
 
-## How it works
+## Capabilities covered
+
+### 4 Condition Types (`attest_flow.py`)
+
+| Type | What It Checks | Chains |
+|------|---------------|--------|
+| `token_balance` | ERC-20/SPL balance >= threshold | All 31 EVM + Solana |
+| `nft_ownership` | Holds >= 1 NFT from collection | All 31 EVM + Solana |
+| `eas_attestation` | On-chain identity credential via EAS | Ethereum, Base, Optimism, Arbitrum, Polygon, Avalanche |
+| `farcaster_id` | Farcaster IdRegistry presence | Optimism |
+
+### 5 Compliance Templates (`compliance_gating.py`)
+
+| Template | Chain | What It Verifies |
+|----------|-------|-----------------|
+| `coinbase_verified_account` | Base (8453) | Coinbase KYC verification |
+| `coinbase_verified_country` | Base (8453) | Coinbase country attestation |
+| `coinbase_one` | Base (8453) | Coinbase One membership |
+| `gitcoin_passport_score` | Optimism (10) | Gitcoin Passport humanity score >= 20 |
+| `gitcoin_passport_active` | Optimism (10) | Active Gitcoin Passport |
+
+### Trust Profile Dimensions (`trust_flow.py`)
+
+| Dimension | Checks | What It Covers |
+|-----------|--------|---------------|
+| Stablecoins | 7 | USDC, USDT, DAI across major chains |
+| Governance | 4 | UNI, AAVE, COMP, MKR |
+| NFTs | 3 | BAYC, CryptoPunks, Pudgy Penguins |
+| Staking | 3 | stETH, rETH, cbETH |
+
+### Merchant Onboarding (`merchant_onboarding.py`)
+
+```
+Agent                         InsumerAPI
+  │                               │
+  ├─ POST /v1/merchants ─────────►│  Create merchant (100 free credits)
+  ├─ PUT  /v1/merchants/{id}/tokens ►│  Configure token tiers (up to 8 × 4)
+  ├─ PUT  /v1/merchants/{id}/nfts ──►│  Configure NFT collections (up to 4)
+  ├─ PUT  /v1/merchants/{id}/settings►│  Set discount mode + USDC payments
+  ├─ POST /v1/merchants/{id}/directory►│  Publish to directory
+  ├─ GET  /v1/merchants/{id}/status ─►│  Verify full configuration
+  │                               │
+  │  Merchant is now discoverable │
+  │  by other AI agents via       │
+  │  GET /v1/merchants            │
+```
+
+### Commerce Protocol Integration
 
 ```
 Agent                    InsumerAPI                  Blockchain
@@ -63,36 +125,42 @@ Agent                    InsumerAPI                  Blockchain
   │◄── discount applied ─────┤                           │
 ```
 
-## Endpoints used
+## All endpoints covered
 
-| Endpoint | Auth | Credits | Description |
+| Endpoint | Auth | Credits | Example File |
 |----------|------|---------|-------------|
-| `POST /v1/acp/discount` | API key | 1 merchant credit | ACP-format discount with coupon objects |
-| `POST /v1/ucp/discount` | API key | 1 merchant credit | UCP-format discount with title + extension |
-| `GET /v1/codes/{code}` | None | Free | Validate an INSR-XXXXX code |
-| `GET /v1/merchants` | None | Free | Browse merchant directory |
-| `GET /v1/discount/check` | None | Free | Check eligibility (no code generated) |
+| `POST /v1/attest` | API key | 1 (2 w/ Merkle) | `attest_flow.py` |
+| `POST /v1/trust` | API key | 3 (6 w/ Merkle) | `trust_flow.py` |
+| `POST /v1/trust/batch` | API key | 3/wallet | `trust_flow.py` |
+| `GET /v1/compliance/templates` | Public | Free | `compliance_gating.py` |
+| `GET /v1/credits` | API key | Free | `credits_flow.py` |
+| `POST /v1/credits/buy` | API key | — | `credits_flow.py` |
+| `POST /v1/acp/discount` | API key | 1 merchant | `acp_flow.py` |
+| `POST /v1/ucp/discount` | API key | 1 merchant | `ucp_flow.py` |
+| `GET /v1/codes/{code}` | Public | Free | `validate_code.py` |
+| `GET /v1/merchants` | API key | Free | `full_agent_flow.py` |
+| `GET /v1/merchants/{id}` | API key | Free | `full_agent_flow.py` |
+| `GET /v1/discount/check` | API key | Free | `full_agent_flow.py` |
+| `POST /v1/merchants` | API key | — | `merchant_onboarding.py` |
+| `PUT /v1/merchants/{id}/tokens` | API key | — | `merchant_onboarding.py` |
+| `PUT /v1/merchants/{id}/nfts` | API key | — | `merchant_onboarding.py` |
+| `PUT /v1/merchants/{id}/settings` | API key | — | `merchant_onboarding.py` |
+| `POST /v1/merchants/{id}/directory` | API key | — | `merchant_onboarding.py` |
+| `GET /v1/merchants/{id}/status` | API key | — | `merchant_onboarding.py` |
+| `POST /v1/merchants/{id}/credits` | API key | — | `credits_flow.py` |
 
-## Response formats
+## Cryptographic verification
 
-**ACP** returns coupon objects compatible with Stripe checkout:
-```json
-{
-  "coupon": { "id": "insumer-insr-a7k3m", "name": "Token Holder Discount (15% off)", "percent_off": 15 },
-  "start": "2026-02-27T12:00:00.000Z",
-  "end": "2026-02-27T12:30:00.000Z"
-}
+Every attestation and trust profile is ECDSA P-256 signed. Verify independently:
+
+```bash
+npm install insumer-verify
 ```
 
-**UCP** returns title strings with the `dev.ucp.shopping.discount` extension:
-```json
-{
-  "title": "Token Holder Discount - 15% Off",
-  "extension": "dev.ucp.shopping.discount"
-}
+```javascript
+const { verify } = require('insumer-verify');
+const valid = await verify(attestation, { jwksUrl: 'https://insumermodel.com/.well-known/jwks.json' });
 ```
-
-Both include an ECDSA P-256 signature (`sig` + `kid`) for cryptographic verification.
 
 ## Links
 
@@ -100,8 +168,11 @@ Both include an ECDSA P-256 signature (`sig` + `kid`) for cryptographic verifica
 - [OpenAPI Spec](https://insumermodel.com/openapi.yaml)
 - [ACP Integration Guide](https://insumermodel.com/blog/acp-discount-endpoint-integration-guide.html)
 - [UCP Commerce Tutorial](https://insumermodel.com/blog/on-chain-verification-ai-agent-commerce-tutorial.html)
+- [Compliance Gating Guide](https://insumermodel.com/blog/compliance-gating-coinbase-verifications.html)
+- [Trust Profiles Guide](https://insumermodel.com/blog/wallet-trust-profiles-agent-to-agent-trust.html)
+- [Merkle Proofs Guide](https://insumermodel.com/blog/merkle-proofs-trustless-on-chain-verification.html)
 - [MCP Server](https://www.npmjs.com/package/mcp-server-insumer) (23 tools, npm)
-- [LangChain SDK](https://pypi.org/project/langchain-insumer/) (19 tools, PyPI)
+- [LangChain SDK](https://pypi.org/project/langchain-insumer/) (23 tools, PyPI)
 
 ## License
 
