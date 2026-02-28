@@ -11,8 +11,8 @@ Supported USDC payment chains:
   Optimism (10), BNB Chain (56), Avalanche (43114), Solana ("solana")
 
 Platform wallets:
-  EVM:    0x47aD9e8cbBAd7c7667659f5971Aa9f65b2F214E9
-  Solana: 5v9CXTpN3WHbM2jAYty88qDGz7P4yuMv8fnuPRXBPmiB
+  EVM:    0xAd982CB19aCCa2923Df8F687C0614a7700255a23
+  Solana: 6a1mLjefhvSJX1sEX8PTnionbE9DqoYjU6F6bNkT4Ydr
 
 Usage:
     export INSUMER_API_KEY="insr_live_YOUR_KEY_HERE"
@@ -79,8 +79,8 @@ print(f'    "amount": 5         // 5 USDC = 125 credits')
 print(f"  }}")
 
 print("\n  Platform wallets:")
-print("    EVM:    0x47aD9e8cbBAd7c7667659f5971Aa9f65b2F214E9")
-print("    Solana: 5v9CXTpN3WHbM2jAYty88qDGz7P4yuMv8fnuPRXBPmiB")
+print("    EVM:    0xAd982CB19aCCa2923Df8F687C0614a7700255a23")
+print("    Solana: 6a1mLjefhvSJX1sEX8PTnionbE9DqoYjU6F6bNkT4Ydr")
 
 print("\n  Supported chains:")
 chains = [

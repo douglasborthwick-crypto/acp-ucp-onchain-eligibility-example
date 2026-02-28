@@ -82,9 +82,9 @@ Free tier includes 10 verification credits. No credit card required.
 
 | Dimension | Checks | What It Covers |
 |-----------|--------|---------------|
-| Stablecoins | 7 | USDC, USDT, DAI across major chains |
-| Governance | 4 | UNI, AAVE, COMP, MKR |
-| NFTs | 3 | BAYC, CryptoPunks, Pudgy Penguins |
+| Stablecoins | 7 | USDC across major chains |
+| Governance | 4 | UNI, AAVE, ARB, OP |
+| NFTs | 3 | BAYC, Pudgy Penguins, Wrapped CryptoPunks |
 | Staking | 3 | stETH, rETH, cbETH |
 
 ### Merchant Onboarding (`merchant_onboarding.py`)

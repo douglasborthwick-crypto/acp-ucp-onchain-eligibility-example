@@ -3,9 +3,9 @@ Wallet Trust Profiles — Agent-to-Agent Trust Signals
 
 Generate ECDSA-signed trust fact profiles for any EVM wallet.
 17 checks across 4 dimensions:
-  - Stablecoins: USDC, USDT, DAI across 7 chains
-  - Governance: UNI, AAVE, COMP, MKR
-  - NFTs: BAYC, CryptoPunks, Pudgy Penguins
+  - Stablecoins: USDC across 7 chains
+  - Governance: UNI, AAVE, ARB, OP
+  - NFTs: BAYC, Pudgy Penguins, Wrapped CryptoPunks
   - Staking: stETH, rETH, cbETH
 
 Single wallet (3 credits) or batch up to 10 wallets (3 credits/wallet).

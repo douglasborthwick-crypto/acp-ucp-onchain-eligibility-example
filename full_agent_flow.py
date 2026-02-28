@@ -41,9 +41,9 @@ if not merchants["ok"] or not merchants["data"]:
 
 for m in merchants["data"]:
     tokens = [t["symbol"] for t in m.get("tokens", [])]
-    print(f"  {m['companyName']} ({m['companyId']}) — tokens: {', '.join(tokens) or 'none'}")
+    print(f"  {m['companyName']} ({m['id']}) — tokens: {', '.join(tokens) or 'none'}")
 
-merchant_id = merchants["data"][0]["companyId"]
+merchant_id = merchants["data"][0]["id"]
 print(f"\nUsing merchant: {merchant_id}")
 
 
@@ -53,14 +53,14 @@ print("\n=== Step 2: Check Eligibility (Free) ===\n")
 
 eligibility = requests.get(
     f"{BASE_URL}/v1/discount/check",
-    params={"merchantId": merchant_id, "wallet": WALLET},
+    params={"merchant": merchant_id, "wallet": WALLET},
 ).json()
 
 if eligibility["ok"]:
     elig = eligibility["data"]
     print(f"Eligible: {elig.get('eligible', False)}")
     if elig.get("eligible"):
-        print(f"Discount: {elig.get('discount', 0)}%")
+        print(f"Discount: {elig.get('totalDiscount', 0)}%")
     else:
         print("Wallet does not qualify for this merchant.")
         print("(Try a different merchant or wallet)")
