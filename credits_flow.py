@@ -86,7 +86,7 @@ print("\n  Supported chains:")
 chains = [
     ("Ethereum", 1), ("Base", 8453), ("Polygon", 137),
     ("Arbitrum", 42161), ("Optimism", 10), ("BNB Chain", 56),
-    ("Avalanche", 43114), ("Solana", "solana"),
+    ("Avalanche", 43114), ("Solana", "solana"), ("XRPL", "xrpl"),
 ]
 for name, chain_id in chains:
     print(f"    {name} (chainId: {chain_id})")

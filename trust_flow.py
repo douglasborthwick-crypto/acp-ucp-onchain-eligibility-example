@@ -38,7 +38,10 @@ print("=== Single Wallet Trust Profile ===\n")
 result = requests.post(
     f"{BASE_URL}/v1/trust",
     headers=HEADERS,
-    json={"wallet": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"},
+    json={
+        "wallet": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+        "xrplWallet": "rG1QQv2nh2gr7RCZ1P8YYcBUKCCN633jCn",
+    },
 ).json()
 
 if not result["ok"]:
@@ -82,7 +85,8 @@ print("\n\n=== Batch Trust Profiles (3 wallets) ===\n")
 wallets = [
     {"wallet": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"},  # vitalik.eth
     {"wallet": "0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B"},  # another known wallet
-    {"wallet": "0x1234567890abcdef1234567890abcdef12345678"},  # likely empty
+    {"wallet": "0x1234567890abcdef1234567890abcdef12345678",
+     "xrplWallet": "rG1QQv2nh2gr7RCZ1P8YYcBUKCCN633jCn"},  # with XRPL
 ]
 
 batch = requests.post(

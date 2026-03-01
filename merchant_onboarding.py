@@ -90,6 +90,16 @@ result = requests.put(
                     {"name": "Whale", "threshold": 10000, "discount": 8},
                 ],
             },
+            {
+                "symbol": "RLUSD",
+                "chainId": "xrpl",
+                "contractAddress": "rMxCKbEDwqr76QuheSUMdEGf4B9xJ8m5De",
+                "currency": "RLUSD",
+                "tiers": [
+                    {"name": "Holder", "threshold": 100, "discount": 3},
+                    {"name": "Whale", "threshold": 10000, "discount": 8},
+                ],
+            },
         ],
     },
 ).json()
@@ -123,6 +133,12 @@ result = requests.put(
                 "contractAddress": "0xD4307E0acD12CF46fD6cf93BC264f5D5D1598792",
                 "chainId": 8453,
                 "discount": 8,
+            },
+            {
+                "name": "XRPL NFT Collection",
+                "contractAddress": "rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh",
+                "chainId": "xrpl",
+                "discount": 5,
             },
         ],
     },

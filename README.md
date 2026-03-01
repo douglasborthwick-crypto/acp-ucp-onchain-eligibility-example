@@ -86,6 +86,8 @@ Free tier includes 10 verification credits. No credit card required.
 | Governance | 4 | UNI, AAVE, ARB, OP |
 | NFTs | 3 | BAYC, Pudgy Penguins, Wrapped CryptoPunks |
 | Staking | 3 | stETH, rETH, cbETH |
+| Solana | 1 | USDC on Solana (optional, requires `solanaWallet`) |
+| XRPL | 2 | RLUSD + USDC on XRPL (optional, requires `xrplWallet`) |
 
 ### Merchant Onboarding (`merchant_onboarding.py`)
 

@@ -23,9 +23,21 @@ if not API_KEY:
     sys.exit(1)
 
 
-def ucp_discount(merchant_id: str, wallet: str, items: list | None = None) -> dict:
+def ucp_discount(
+    merchant_id: str,
+    wallet: str | None = None,
+    solana_wallet: str | None = None,
+    xrpl_wallet: str | None = None,
+    items: list | None = None,
+) -> dict:
     """Request a UCP-format discount for a wallet at a merchant."""
-    payload = {"merchantId": merchant_id, "wallet": wallet}
+    payload = {"merchantId": merchant_id}
+    if wallet:
+        payload["wallet"] = wallet
+    if solana_wallet:
+        payload["solanaWallet"] = solana_wallet
+    if xrpl_wallet:
+        payload["xrplWallet"] = xrpl_wallet
     if items:
         payload["items"] = items
 
@@ -40,6 +52,9 @@ def ucp_discount(merchant_id: str, wallet: str, items: list | None = None) -> di
 # --- Example: UCP discount with items ---
 
 print("=== UCP Discount ===\n")
+
+# For XRPL wallets, pass xrpl_wallet instead of wallet:
+#   ucp_discount(merchant_id="demo-coffee-shop", xrpl_wallet="rG1QQv2nh2gr7RCZ1P8YYcBUKCCN633jCn")
 
 result = ucp_discount(
     merchant_id="demo-coffee-shop",

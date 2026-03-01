@@ -200,3 +200,54 @@ if result["ok"]:
         print(f"\n  Merkle proof unavailable: {reason}")
 else:
     print_results(result)
+
+
+# ── Example 7: XRPL — native XRP balance ──────────────────────
+
+print("\n\n=== Example 7: XRPL — Native XRP Balance ===\n")
+
+XRPL_WALLET = "rG1QQv2nh2gr7RCZ1P8YYcBUKCCN633jCn"
+
+result = requests.post(
+    f"{BASE_URL}/v1/attest",
+    headers=HEADERS,
+    json={
+        "xrplWallet": XRPL_WALLET,
+        "conditions": [
+            {
+                "type": "token_balance",
+                "contractAddress": "native",
+                "chainId": "xrpl",
+                "threshold": 100,
+                "label": "XRP >= 100",
+            },
+        ],
+    },
+).json()
+
+print_results(result)
+
+
+# ── Example 8: XRPL — RLUSD trust line token ──────────────────
+
+print("\n\n=== Example 8: XRPL — RLUSD Trust Line Token ===\n")
+
+result = requests.post(
+    f"{BASE_URL}/v1/attest",
+    headers=HEADERS,
+    json={
+        "xrplWallet": XRPL_WALLET,
+        "conditions": [
+            {
+                "type": "token_balance",
+                "contractAddress": "rMxCKbEDwqr76QuheSUMdEGf4B9xJ8m5De",
+                "chainId": "xrpl",
+                "currency": "RLUSD",
+                "threshold": 10,
+                "label": "RLUSD >= 10 on XRPL",
+            },
+        ],
+    },
+).json()
+
+print_results(result)
