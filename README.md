@@ -63,8 +63,8 @@ Free tier includes 10 verification credits. No credit card required.
 
 | Type | What It Checks | Chains |
 |------|---------------|--------|
-| `token_balance` | ERC-20/SPL balance >= threshold | All 31 EVM + Solana |
-| `nft_ownership` | Holds >= 1 NFT from collection | All 31 EVM + Solana |
+| `token_balance` | ERC-20/SPL balance >= threshold | All 32 (30 EVM + Solana + XRPL) |
+| `nft_ownership` | Holds >= 1 NFT from collection | All 32 (30 EVM + Solana + XRPL) |
 | `eas_attestation` | On-chain identity credential via EAS | Ethereum, Base, Optimism, Arbitrum, Polygon, Avalanche |
 | `farcaster_id` | Farcaster IdRegistry presence | Optimism |
 
