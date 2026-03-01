@@ -2,7 +2,7 @@
 Wallet Trust Profiles — Agent-to-Agent Trust Signals
 
 Generate ECDSA-signed trust fact profiles for any EVM wallet.
-17 checks across 4 dimensions:
+17 base checks across 4 dimensions (up to 20 with optional Solana + XRPL):
   - Stablecoins: USDC across 7 chains
   - Governance: UNI, AAVE, ARB, OP
   - NFTs: BAYC, Pudgy Penguins, Wrapped CryptoPunks

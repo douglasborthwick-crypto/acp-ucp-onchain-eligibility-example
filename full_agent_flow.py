@@ -32,6 +32,7 @@ print("=== Step 1: Discover Merchants ===\n")
 
 merchants = requests.get(
     f"{BASE_URL}/v1/merchants",
+    headers={"X-API-Key": API_KEY, "Content-Type": "application/json"},
     params={"verified": "true", "limit": 5},
 ).json()
 
@@ -53,6 +54,7 @@ print("\n=== Step 2: Check Eligibility (Free) ===\n")
 
 eligibility = requests.get(
     f"{BASE_URL}/v1/discount/check",
+    headers={"X-API-Key": API_KEY, "Content-Type": "application/json"},
     params={"merchant": merchant_id, "wallet": WALLET},
 ).json()
 
