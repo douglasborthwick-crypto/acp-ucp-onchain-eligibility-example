@@ -168,6 +168,7 @@ const valid = await verify(attestation, { jwksUrl: 'https://insumermodel.com/.we
 
 - [API Documentation](https://insumermodel.com/developers/)
 - [OpenAPI Spec](https://insumermodel.com/openapi.yaml)
+- [AI Agent Verification API guide](https://insumermodel.com/ai-agent-verification-api/)
 - [ACP Integration Guide](https://insumermodel.com/blog/acp-discount-endpoint-integration-guide.html)
 - [UCP Commerce Tutorial](https://insumermodel.com/blog/on-chain-verification-ai-agent-commerce-tutorial.html)
 - [Compliance Gating Guide](https://insumermodel.com/blog/compliance-gating-coinbase-verifications.html)
