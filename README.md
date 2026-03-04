@@ -34,6 +34,12 @@ Minimal, copy-paste-ready examples for integrating on-chain verification into AI
 ## Quick start
 
 ```bash
+# Get a free API key (10 verification credits, instant)
+curl -X POST \
+  https://us-central1-insumer-merchant.cloudfunctions.net/createDeveloperApiKey \
+  -H "Content-Type: application/json" \
+  -d '{"email": "you@example.com", "appName": "my-app", "tier": "free"}'
+
 # Clone
 git clone https://github.com/douglasborthwick-crypto/acp-ucp-onchain-eligibility-example.git
 cd acp-ucp-onchain-eligibility-example
@@ -41,7 +47,7 @@ cd acp-ucp-onchain-eligibility-example
 # Install
 pip install requests
 
-# Set your API key (free tier: 10 credits)
+# Set your API key
 export INSUMER_API_KEY="insr_live_YOUR_KEY_HERE"
 
 # Run any example
@@ -50,12 +56,6 @@ python attest_flow.py
 python compliance_gating.py
 python merchant_onboarding.py
 ```
-
-## Get an API key
-
-Free tier includes 10 verification credits. No credit card required.
-
-→ [Get your key](https://insumermodel.com/developers/#pricing)
 
 ## Capabilities covered
 
