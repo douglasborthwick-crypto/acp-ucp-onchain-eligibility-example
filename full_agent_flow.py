@@ -90,7 +90,13 @@ acp = requests.post(
 ).json()
 
 if not acp["ok"]:
-    print(f"Error: {acp['error']['message']}")
+    # rpc_failure (503) = data source unavailable, retryable after 2-5s
+    if acp.get("error", {}).get("code") == "rpc_failure":
+        print("rpc_failure: data source temporarily unavailable — retry after 2-5s")
+        for fc in acp["error"].get("failedConditions", []):
+            print(f"  {fc['source']} chain {fc.get('chainId', '?')}: {fc['message']}")
+    else:
+        print(f"Error: {acp['error']['message']}")
     sys.exit(1)
 
 applied = acp["data"]["discounts"]["applied"]

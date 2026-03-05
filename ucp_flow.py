@@ -46,7 +46,11 @@ def ucp_discount(
         headers={"X-API-Key": API_KEY, "Content-Type": "application/json"},
         json=payload,
     )
-    return resp.json()
+    result = resp.json()
+    # rpc_failure (503) = data source unavailable, retryable after 2-5s
+    if resp.status_code == 503 and result.get("error", {}).get("code") == "rpc_failure":
+        print("  rpc_failure: data source temporarily unavailable — retry after 2-5s")
+    return result
 
 
 # --- Example: UCP discount with items ---

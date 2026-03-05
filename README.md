@@ -151,6 +151,22 @@ Agent                    InsumerAPI                  Blockchain
 | `GET /v1/merchants/{id}/status` | API key | — | `merchant_onboarding.py` |
 | `POST /v1/merchants/{id}/credits` | API key | — | `credits_flow.py` |
 
+## Handling `rpc_failure` Errors
+
+If the API cannot reach a data source (RPC node, Helius, XRPL, Covalent) after retries, it returns HTTP 503 with `error.code: "rpc_failure"`. No attestation is signed, no credits are charged. This is a retryable error — wait 2-5 seconds and retry.
+
+**Important:** `rpc_failure` is NOT a verification failure. Do not treat it as `pass: false`. It means the data source was temporarily unavailable and the API refused to sign an unverified result.
+
+```python
+resp = requests.post(f"{BASE_URL}/v1/attest", headers=HEADERS, json=payload)
+result = resp.json()
+
+if resp.status_code == 503 and result.get("error", {}).get("code") == "rpc_failure":
+    # Retryable — data source temporarily unavailable
+    print("Failed sources:", result["error"]["failedConditions"])
+    # Wait 2-5s and retry
+```
+
 ## Cryptographic verification
 
 Every attestation and trust profile is ECDSA P-256 signed. Verify independently:
@@ -174,8 +190,8 @@ const valid = await verify(attestation, { jwksUrl: 'https://insumermodel.com/.we
 - [Compliance Gating Guide](https://insumermodel.com/blog/compliance-gating-coinbase-verifications.html)
 - [Trust Profiles Guide](https://insumermodel.com/blog/wallet-trust-profiles-agent-to-agent-trust.html)
 - [Merkle Proofs Guide](https://insumermodel.com/blog/merkle-proofs-trustless-on-chain-verification.html)
-- [MCP Server](https://www.npmjs.com/package/mcp-server-insumer) (23 tools, npm)
-- [LangChain SDK](https://pypi.org/project/langchain-insumer/) (23 tools, PyPI)
+- [MCP Server](https://www.npmjs.com/package/mcp-server-insumer) (25 tools, npm)
+- [LangChain SDK](https://pypi.org/project/langchain-insumer/) (25 tools, PyPI)
 
 ## License
 

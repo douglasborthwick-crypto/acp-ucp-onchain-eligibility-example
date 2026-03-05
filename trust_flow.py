@@ -45,7 +45,13 @@ result = requests.post(
 ).json()
 
 if not result["ok"]:
-    print(f"Error: {result['error']['message']}")
+    # rpc_failure (503) = data source unavailable, retryable after 2-5s
+    if result.get("error", {}).get("code") == "rpc_failure":
+        print("rpc_failure: data source temporarily unavailable — retry after 2-5s")
+        for fc in result["error"].get("failedConditions", []):
+            print(f"  {fc['source']} chain {fc.get('chainId', '?')}: {fc['message']}")
+    else:
+        print(f"Error: {result['error']['message']}")
     sys.exit(1)
 
 trust = result["data"]["trust"]

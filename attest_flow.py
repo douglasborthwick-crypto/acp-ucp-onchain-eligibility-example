@@ -37,7 +37,14 @@ def attest(conditions, wallet=WALLET, proof=None):
     if proof:
         payload["proof"] = proof
     resp = requests.post(f"{BASE_URL}/v1/attest", headers=HEADERS, json=payload)
-    return resp.json()
+    result = resp.json()
+    # rpc_failure (503) = data source unavailable, retryable after 2-5s
+    # NOT a verification failure — do not treat as pass: false
+    if resp.status_code == 503 and result.get("error", {}).get("code") == "rpc_failure":
+        print("  rpc_failure: data source temporarily unavailable — retry after 2-5s")
+        for fc in result["error"].get("failedConditions", []):
+            print(f"    {fc['source']} chain {fc.get('chainId', '?')}: {fc['message']}")
+    return result
 
 
 def print_results(result):
