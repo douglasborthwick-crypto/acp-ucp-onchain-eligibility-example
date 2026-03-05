@@ -11,7 +11,7 @@ Usage:
 import sys
 import requests
 
-BASE_URL = "https://us-central1-insumer-merchant.cloudfunctions.net/insumerApi"
+BASE_URL = "https://api.insumermodel.com"
 
 
 def validate_code(code: str) -> dict:

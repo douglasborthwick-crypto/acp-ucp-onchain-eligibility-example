@@ -16,7 +16,7 @@ import os
 import sys
 import requests
 
-BASE_URL = "https://us-central1-insumer-merchant.cloudfunctions.net/insumerApi"
+BASE_URL = "https://api.insumermodel.com"
 API_KEY = os.environ.get("INSUMER_API_KEY", "")
 WALLET = "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
 

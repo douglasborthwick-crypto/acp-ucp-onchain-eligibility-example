@@ -20,7 +20,7 @@ import os
 import sys
 import requests
 
-BASE_URL = "https://us-central1-insumer-merchant.cloudfunctions.net/insumerApi"
+BASE_URL = "https://api.insumermodel.com"
 API_KEY = os.environ.get("INSUMER_API_KEY", "")
 
 if not API_KEY:
