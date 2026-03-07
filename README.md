@@ -176,8 +176,15 @@ npm install insumer-verify
 ```
 
 ```javascript
-const { verify } = require('insumer-verify');
-const valid = await verify(attestation, { jwksUrl: 'https://insumermodel.com/.well-known/jwks.json' });
+import { verifyAttestation } from "insumer-verify";
+
+// Pass the full API response envelope {ok, data: {attestation, sig, kid}, meta}
+// Do NOT pass response.data — the function expects the outer envelope
+const response = await res.json();
+const result = await verifyAttestation(response, {
+  jwksUrl: "https://insumermodel.com/.well-known/jwks.json"
+});
+console.log(result.valid); // true
 ```
 
 ## Links
