@@ -43,7 +43,7 @@ def attest(conditions, wallet=WALLET, proof=None):
     if resp.status_code == 503 and result.get("error", {}).get("code") == "rpc_failure":
         print("  rpc_failure: data source temporarily unavailable — retry after 2-5s")
         for fc in result["error"].get("failedConditions", []):
-            print(f"    {fc['source']} chain {fc.get('chainId', '?')}: {fc['message']}")
+            print(f"    chain {fc.get('chainId', '?')}: {fc['message']}")
     return result
 
 

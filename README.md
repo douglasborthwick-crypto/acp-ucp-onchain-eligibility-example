@@ -140,9 +140,9 @@ Agent                    InsumerAPI                  Blockchain
 | `POST /v1/acp/discount` | API key | 1 merchant | `acp_flow.py` |
 | `POST /v1/ucp/discount` | API key | 1 merchant | `ucp_flow.py` |
 | `GET /v1/codes/{code}` | Public | Free | `validate_code.py` |
-| `GET /v1/merchants` | API key | Free | `full_agent_flow.py` |
-| `GET /v1/merchants/{id}` | API key | Free | `full_agent_flow.py` |
-| `GET /v1/discount/check` | API key | Free | `full_agent_flow.py` |
+| `GET /v1/merchants` | None | Free | `full_agent_flow.py` |
+| `GET /v1/merchants/{id}` | None | Free | `full_agent_flow.py` |
+| `GET /v1/discount/check` | None | Free | `full_agent_flow.py` |
 | `POST /v1/merchants` | API key | — | `merchant_onboarding.py` |
 | `PUT /v1/merchants/{id}/tokens` | API key | — | `merchant_onboarding.py` |
 | `PUT /v1/merchants/{id}/nfts` | API key | — | `merchant_onboarding.py` |
@@ -153,7 +153,7 @@ Agent                    InsumerAPI                  Blockchain
 
 ## Handling `rpc_failure` Errors
 
-If the API cannot reach an upstream blockchain data source after retries, it returns HTTP 503 with `error.code: "rpc_failure"`. No attestation is signed, no credits are charged. This is a retryable error — wait 2-5 seconds and retry.
+If the API cannot reach an upstream data source after retries, it returns HTTP 503 with `error.code: "rpc_failure"`. No attestation is signed, no credits are charged. This is a retryable error — wait 2-5 seconds and retry.
 
 **Important:** `rpc_failure` is NOT a verification failure. Do not treat it as `pass: false`. It means the data source was temporarily unavailable and the API refused to sign an unverified result.
 

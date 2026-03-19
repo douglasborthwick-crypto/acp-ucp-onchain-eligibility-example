@@ -49,7 +49,7 @@ if not result["ok"]:
     if result.get("error", {}).get("code") == "rpc_failure":
         print("rpc_failure: data source temporarily unavailable — retry after 2-5s")
         for fc in result["error"].get("failedConditions", []):
-            print(f"  {fc['source']} chain {fc.get('chainId', '?')}: {fc['message']}")
+            print(f"  chain {fc.get('chainId', '?')}: {fc['message']}")
     else:
         print(f"Error: {result['error']['message']}")
     sys.exit(1)

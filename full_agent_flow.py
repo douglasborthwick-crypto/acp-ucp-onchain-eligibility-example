@@ -94,7 +94,7 @@ if not acp["ok"]:
     if acp.get("error", {}).get("code") == "rpc_failure":
         print("rpc_failure: data source temporarily unavailable — retry after 2-5s")
         for fc in acp["error"].get("failedConditions", []):
-            print(f"  {fc['source']} chain {fc.get('chainId', '?')}: {fc['message']}")
+            print(f"  chain {fc.get('chainId', '?')}: {fc['message']}")
     else:
         print(f"Error: {acp['error']['message']}")
     sys.exit(1)
