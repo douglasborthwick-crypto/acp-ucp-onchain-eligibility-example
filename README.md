@@ -20,7 +20,7 @@ Minimal, copy-paste-ready examples for integrating on-chain verification into AI
 
 | File | Description |
 |------|-------------|
-| `attest_flow.py` | Boolean attestation — all 4 condition types + Merkle storage proofs |
+| `attest_flow.py` | Boolean attestation — 4 of the 9 condition types + Merkle storage proofs |
 | `trust_flow.py` | Wallet trust profiles — single + batch (up to 10 wallets) |
 | `compliance_gating.py` | EAS attestation templates — Coinbase KYC, Gitcoin Passport, Farcaster ID |
 
