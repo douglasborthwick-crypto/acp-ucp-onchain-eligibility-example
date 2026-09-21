@@ -63,9 +63,9 @@ python merchant_onboarding.py
 
 | Type | What It Checks | Chains |
 |------|---------------|--------|
-| `token_balance` | ERC-20/SPL balance >= threshold | All 32 (30 EVM + Solana + XRPL) |
-| `nft_ownership` | Holds >= 1 NFT from collection | All 32 (30 EVM + Solana + XRPL) |
-| `eas_attestation` | On-chain identity credential via EAS | Ethereum, Base, Optimism, Arbitrum, Polygon, Avalanche |
+| `token_balance` | Token or native coin balance >= threshold | All 37 (31 EVM + Solana, XRPL, Bitcoin, Tron, Stellar, Sui) |
+| `nft_ownership` | Holds >= 1 NFT from collection | 33 (31 EVM + Solana + XRPL) |
+| `eas_attestation` | On-chain identity credential via EAS | Ethereum, Optimism, Polygon, Base, Arbitrum |
 | `farcaster_id` | Farcaster IdRegistry presence | Optimism |
 
 ### 5 Compliance Templates (`compliance_gating.py`)
@@ -80,14 +80,19 @@ python merchant_onboarding.py
 
 ### Trust Profile Dimensions (`trust_flow.py`)
 
+The base profile is 44 checks across 25 chains in 5 dimensions. Optional non-EVM wallets add up to 5 more checks in 4 more dimensions: up to 49 checks across 27 chains in 9 dimensions.
+
 | Dimension | Checks | What It Covers |
 |-----------|--------|---------------|
-| Stablecoins | 7 | USDC across major chains |
+| Stablecoins | 26 | USDC and USDT across major chains |
 | Governance | 4 | UNI, AAVE, ARB, OP |
 | NFTs | 3 | BAYC, Pudgy Penguins, Wrapped CryptoPunks |
 | Staking | 3 | stETH, rETH, cbETH |
+| Institutional stablecoins | 8 | EURCV, USDCV, USDC and BENJI across Ethereum, Solana, XRPL, Stellar and Sui (the non-EVM entries are evaluated when that wallet is supplied) |
 | Solana | 1 | USDC on Solana (optional, requires `solanaWallet`) |
 | XRPL | 2 | RLUSD + USDC on XRPL (optional, requires `xrplWallet`) |
+| Bitcoin | 1 | Native BTC (optional, requires `bitcoinWallet`) |
+| Tron | 1 | USDT on Tron (optional, requires `tronWallet`) |
 
 ### Merchant Onboarding (`merchant_onboarding.py`)
 
@@ -197,8 +202,8 @@ console.log(result.valid); // true
 - [Compliance Gating Guide](https://insumermodel.com/blog/compliance-gating-coinbase-verifications.html)
 - [Trust Profiles Guide](https://insumermodel.com/blog/wallet-trust-profiles-agent-to-agent-trust.html)
 - [Merkle Proofs Guide](https://insumermodel.com/blog/merkle-proofs-trustless-on-chain-verification.html)
-- [MCP Server](https://www.npmjs.com/package/mcp-server-insumer) (25 tools, npm)
-- [LangChain SDK](https://pypi.org/project/langchain-insumer/) (25 tools, PyPI)
+- [MCP Server](https://www.npmjs.com/package/mcp-server-insumer) (27 tools, npm)
+- [LangChain SDK](https://pypi.org/project/langchain-insumer/) (26 tools, PyPI)
 
 ## License
 

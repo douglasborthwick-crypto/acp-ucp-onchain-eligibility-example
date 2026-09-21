@@ -77,7 +77,6 @@ result = attest([
         "contractAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "chainId": 1,
         "threshold": "100",
-        "decimals": 6,
         "label": "USDC >= 100 on Ethereum",
     },
     {
@@ -85,7 +84,6 @@ result = attest([
         "contractAddress": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
         "chainId": 8453,
         "threshold": "50",
-        "decimals": 6,
         "label": "USDC >= 50 on Base",
     },
 ])
@@ -149,7 +147,6 @@ result = attest([
         "contractAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "chainId": 1,
         "threshold": "100",
-        "decimals": 6,
         "label": "USDC >= 100 on Ethereum",
     },
     {
@@ -185,7 +182,6 @@ result = attest(
             "contractAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
             "chainId": 1,
             "threshold": "100",
-            "decimals": 6,
             "label": "USDC >= 100 on Ethereum (with proof)",
         },
     ],
