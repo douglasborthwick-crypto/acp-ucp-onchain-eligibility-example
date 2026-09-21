@@ -102,13 +102,13 @@ if not acp["ok"]:
 applied = acp["data"]["discounts"]["applied"]
 
 if not applied:
-    rejected = acp["data"]["discounts"]["rejected"]
-    reason = rejected[0]["reason"] if rejected else "unknown"
-    print(f"Not eligible: {reason}")
+    print("Not eligible: this wallet holds nothing the merchant discounts.")
     sys.exit(0)
 
 coupon = applied[0]["coupon"]
-code = acp["data"]["discounts"]["codes"][0]
+# The INSR-XXXXX redemption code travels in `verification`; discounts.codes
+# only echoes codes the caller submitted, and this endpoint accepts none.
+code = acp["data"]["verification"]["code"]
 
 print(f"Discount: {coupon['percent_off']}% off")
 print(f"Coupon:   {coupon['name']}")

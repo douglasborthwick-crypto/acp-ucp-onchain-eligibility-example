@@ -29,7 +29,7 @@ Minimal, copy-paste-ready examples for integrating on-chain verification into AI
 | File | Description |
 |------|-------------|
 | `merchant_onboarding.py` | Full self-serve pipeline: create → configure → publish (zero human input) |
-| `credits_flow.py` | Credit management: check balance, buy credits with USDC on-chain |
+| `credits_flow.py` | Credit management: check balance, buy credits on-chain with USDC, USDT or BTC |
 
 ## Quick start
 
@@ -80,11 +80,11 @@ python merchant_onboarding.py
 
 ### Trust Profile Dimensions (`trust_flow.py`)
 
-The base profile is 44 checks across 25 chains in 5 dimensions. Optional non-EVM wallets add up to 5 more checks in 4 more dimensions: up to 49 checks across 27 chains in 9 dimensions.
+The base profile is 45 checks across 26 chains in 5 dimensions. Optional non-EVM wallets add up to 5 more checks in 4 more dimensions: up to 50 checks across 28 chains in 9 dimensions.
 
 | Dimension | Checks | What It Covers |
 |-----------|--------|---------------|
-| Stablecoins | 26 | USDC and USDT across major chains |
+| Stablecoins | 27 | USDC and USDT across 22 EVM chains |
 | Governance | 4 | UNI, AAVE, ARB, OP |
 | NFTs | 3 | BAYC, Pudgy Penguins, Wrapped CryptoPunks |
 | Staking | 3 | stETH, rETH, cbETH |

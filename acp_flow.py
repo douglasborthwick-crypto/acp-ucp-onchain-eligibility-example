@@ -2,7 +2,13 @@
 ACP Discount Flow — OpenAI/Stripe Agentic Commerce Protocol
 
 Verifies on-chain token holdings and returns the discount in ACP format
-with coupon objects, applied/rejected arrays, and per-item allocations.
+with coupon objects, an applied array, and per-item allocations.
+
+The INSR-XXXXX redemption code is in data["verification"]["code"].
+discounts.codes and discounts.rejected are always empty on this endpoint:
+they echo discount codes the caller submitted, and it accepts none.
+An applied entry needs a monetary base, so pass items[] or subtotal
+(minor units); without either, applied is empty even for an eligible wallet.
 
 Usage:
     export INSUMER_API_KEY="insr_live_YOUR_KEY_HERE"
@@ -28,6 +34,7 @@ def acp_discount(
     solana_wallet: str | None = None,
     xrpl_wallet: str | None = None,
     items: list | None = None,
+    subtotal: int | None = None,
 ) -> dict:
     """Request an ACP-format discount for a wallet at a merchant."""
     payload = {"merchantId": merchant_id}
@@ -39,6 +46,8 @@ def acp_discount(
         payload["xrplWallet"] = xrpl_wallet
     if items:
         payload["items"] = items
+    elif subtotal is not None:
+        payload["subtotal"] = subtotal
 
     resp = requests.post(
         f"{BASE_URL}/v1/acp/discount",
@@ -62,6 +71,7 @@ print("=== Basic ACP Discount ===\n")
 result = acp_discount(
     merchant_id="demo-coffee-shop",
     wallet="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+    subtotal=5000,  # $50.00 order, in cents
 )
 
 if not result["ok"]:
@@ -70,20 +80,19 @@ if not result["ok"]:
 
 discounts = result["data"]["discounts"]
 
-if discounts["applied"]:
-    coupon = discounts["applied"][0]["coupon"]
-    code = discounts["codes"][0]
-    expiry = discounts["applied"][0]["end"]
-    sig = result["data"]["verification"]["sig"]
+verification = result["data"]["verification"]
 
-    print(f"Discount: {coupon['percent_off']}% off")
+if discounts["applied"]:
+    entry = discounts["applied"][0]
+    coupon = entry["coupon"]
+
+    print(f"Discount: {coupon['percent_off']}% off (${entry['amount'] / 100:.2f})")
     print(f"Coupon:   {coupon['name']}")
-    print(f"Code:     {code}")
-    print(f"Expires:  {expiry}")
-    print(f"Signed:   {sig[:40]}...")
+    print(f"Code:     {verification['code']}")
+    print(f"Expires:  {entry['end']}")
+    print(f"Signed:   {verification['sig'][:40]}...")
 else:
-    reason = discounts["rejected"][0]["reason"]
-    print(f"Not eligible: {reason}")
+    print("Not eligible: this wallet holds nothing the merchant discounts.")
 
 print(f"\nCredits used: {result['meta']['creditsCharged']}")
 print(f"Credits left: {result['meta']['creditsRemaining']}")

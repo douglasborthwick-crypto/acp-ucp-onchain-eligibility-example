@@ -94,7 +94,15 @@ result = requests.put(
                 "symbol": "RLUSD",
                 "chainId": "xrpl",
                 "contractAddress": "rMxCKbEDwqr76QuheSUMdEGf4B9xJ8m5De",
-                "currency": "RLUSD",
+                # XRPL stores currency codes longer than 3 characters as 40 hex
+                # characters, and account balances are matched on that code, so
+                # "RLUSD" is written the way the ledger writes it.
+                "currency": "524C555344000000000000000000000000000000",
+                # Required (0-18) on every token config. XRPL trust-line balances
+                # are ledger decimal strings, not integer-scaled, so this value
+                # is not used to scale the balance; 15 matches XRPL's 15
+                # significant digits for issued currencies.
+                "decimals": 15,
                 "tiers": [
                     {"name": "Holder", "threshold": 100, "discount": 3},
                     {"name": "Whale", "threshold": 10000, "discount": 8},

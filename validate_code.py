@@ -21,7 +21,9 @@ def validate_code(code: str) -> dict:
 
 
 # Get code from command line or use example
-code = sys.argv[1] if len(sys.argv) > 1 else "INSR-EXAMPLE"
+# Format-valid placeholder (INSR- plus 5 characters); unless it happens to
+# match a live code, the API answers valid: false, reason "not_found".
+code = sys.argv[1] if len(sys.argv) > 1 else "INSR-A7K3M"
 
 print(f"=== Validating Code: {code} ===\n")
 

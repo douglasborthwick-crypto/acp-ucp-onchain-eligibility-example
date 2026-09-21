@@ -83,7 +83,9 @@ print(f"Extension: {data['extension']}")
 applied = data["discounts"]["applied"]
 if applied:
     discount = applied[0]
-    code = discount["code"]
+    # Applied entries are automatic discounts and carry no `code`; the
+    # INSR-XXXXX redemption code is in `verification`.
+    code = data["verification"]["code"]
     title = discount["title"]
 
     print(f"\nTitle:     {title}")
