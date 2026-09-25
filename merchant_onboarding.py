@@ -13,6 +13,7 @@ This is the complete autonomous commerce setup flow.
 
 Usage:
     export INSUMER_API_KEY="insr_live_YOUR_KEY_HERE"
+    export MERCHANT_EVM_ADDRESS="0xYourStoreWallet"   # where YOUR customers pay you
     python merchant_onboarding.py
 """
 
@@ -26,6 +27,15 @@ API_KEY = os.environ.get("INSUMER_API_KEY", "")
 if not API_KEY:
     print("Set INSUMER_API_KEY environment variable first.")
     print("Get a free key: https://insumermodel.com/developers/#pricing")
+    sys.exit(1)
+
+# The merchant's own receiving wallet: shoppers are told to pay this address.
+# There is deliberately no default. Use a wallet you control; never copy one
+# from an example.
+MERCHANT_EVM_ADDRESS = os.environ.get("MERCHANT_EVM_ADDRESS", "")
+
+if not MERCHANT_EVM_ADDRESS:
+    print("Set MERCHANT_EVM_ADDRESS to the wallet where your customers should pay you.")
     sys.exit(1)
 
 HEADERS = {"X-API-Key": API_KEY, "Content-Type": "application/json"}
@@ -173,7 +183,7 @@ result = requests.put(
         "discountCap": 25,  # max 25% total discount
         "usdcPayment": {
             "enabled": True,
-            "evmAddress": "0x47aD9e8cbBAd7c7667659f5971Aa9f65b2F214E9",
+            "evmAddress": MERCHANT_EVM_ADDRESS,
             "preferredChainId": 8453,  # Base
         },
     },

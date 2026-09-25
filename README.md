@@ -41,7 +41,7 @@ curl -X POST \
   -d '{"email": "you@example.com", "appName": "my-app", "tier": "free"}'
 
 # Clone
-git clone https://github.com/douglasborthwick-crypto/acp-ucp-onchain-eligibility-example.git
+git clone https://github.com/insumerapi/acp-ucp-onchain-eligibility-example.git
 cd acp-ucp-onchain-eligibility-example
 
 # Install
